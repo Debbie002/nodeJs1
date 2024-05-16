@@ -26,15 +26,39 @@ const db = [
         id: 4,
     }
 ]
-const server = http.createServer(()=>{
-    console.log("connection");
-})
+const reqHandler = (req, res)=>{
+    // res.end(JSON.stringify({message: "alive"}))
+    if(req.url === "/" && req.method === "GET"){
+        getJokes(req, res)
 
-const requestHandler = (req, res)=>{
-    console.log(req);
-    res.end(JSON.stringify({message: "connected"}))
+    }else if(req.url ==="/jokes/1" && req.method === "PATCH"){
+        updateJokes(req, res)
+
+    }
+    else{
+        res.writeHead(404)
+        res.end(JSON.stringify({message: "opps not found"}))
+
+    }
+
 }
 
-server.listen(3000, (req, res) =>{
+function getJokes(req, res){
+    res.writeHead(202)
+    res.end(JSON.stringify({db, message: "jokes fetched"}))
+
+}
+function updateJokes(req, res){
+    const id = req.url.split("/")
+    res.writeHead(202)
+    res.end(JSON.stringify({id, message: "jokes updated"}))
+
+}
+const server = http.createServer(reqHandler)
+
+
+
+
+server.listen(3003, () =>{
     console.log("am running");
 })
