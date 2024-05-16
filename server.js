@@ -18,6 +18,12 @@ const db = [
         comedian: "me",
         year: 2024,
         id: 3,
+    },
+    {
+        title: "laugh",
+        comedian: "me",
+        year: 2024,
+        id: 3,
     }
 ]
 const server = https.createServer(()=>{
